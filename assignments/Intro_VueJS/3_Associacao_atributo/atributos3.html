@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue@next"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+        <!-- <div class='centered active'>Hello, Vue!</div> -->
+        <div :class="classObject" :style="styleObject">Hello, Vue!</div>
+        <div><img :src="imageSource" :style="styleImage"/></div>
+    </div>
+    <script>
+        Vue.createApp({
+            data() {
+                return{
+                    classObject: {
+                        centered: true,
+                        active: true
+                    },
+                    styleObject:{
+                        'background-color': 'red',
+                        'text-align': 'center',
+                    },
+                    imageSource: './AmalfiC.jpg',
+                    styleImage:{
+                        'width': '100%',
+                        'height': '95vh',
+                    }
+                }
+            },
+        }).mount('#app');
+    </script>
+</body>
+</html>

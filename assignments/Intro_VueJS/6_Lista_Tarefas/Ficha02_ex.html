@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"> 
+        <script src="https://unpkg.com/vue@3"></script>
+        <!-- {{ texto }} -->
+
+        <h2>Lista de Tarefas</h2>
+        <input type="text" v-model="texto" @keyup.enter="insereTarefa(texto)"> 
+        <!-- <button @click="tarefas.push(texto)">Inserir</button>  com esta linha não da função insereTarefa()-->
+        <button @click="insereTarefa(texto)">Inserir</button>
+        <p>{{ erro }}</p>
+    
+        <ul>
+            <li v-for="item in tarefas"> {{ item }} </li>
+        </ul>
+    </div>
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    texto: '',
+                    erro: '',
+                    tarefas: [
+                        'Exercícios de HTML',
+                        'Exercícios de CSS',
+                        'Exercícios de Javascript',
+                        'Exercícios de VueJS',
+                        'Juntar tudo no Projeto 1'
+                    ]                
+                }
+            },
+            methods:{
+                insereTarefa(item){
+                    if (item != '' && item.length >= 2){
+                        this.tarefas.push(item)
+                        this.texto = ""
+                        this.erro = "" 
+                        
+                    }else
+                        this.erro = 'Está em branco, escreva pelo menos 2 carateres'
+                    }
+                
+                }
+            }).mount('#app')
+    </script>
+    
+</body>
+</html>

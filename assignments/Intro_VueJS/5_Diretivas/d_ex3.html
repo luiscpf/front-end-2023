@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>N elevado Vue.js</title>
+</head>
+<body>
+    <div id="app">
+        {{ n3 ** 3 }} {{ n5 ** 3 }} {{ n10 ** 3}}
+    </div>
+    <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data(){
+                return{
+                    n3: 3,
+                    n5: 5,
+                    n10: 10,
+
+                }
+            },
+        }).mount('#app')
+    </script>
+    
+</body>
+</html>

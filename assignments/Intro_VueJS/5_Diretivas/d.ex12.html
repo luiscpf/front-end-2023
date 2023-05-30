@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        
+        <h1>Vamos Jogar um Jogo</h1>
+        <h2>Acerta o número Secreto:</h2>
+        <input type="text" v-model="tentativas" @keyup.enter="jogoAdivinha(tentativas)">
+        <button @click="jogoAdivinha(tentativas)">Inserir</button>
+        <p v-if = "Alto"> Número muito Alto! Tente de novo... </p>
+        <p v-else-if="Baixo"> Número muito Baixo! Tente de novo... </p>
+        <p v-else-if="Acertou"> <strong>PARABÉNS ACERTASTE!!!</strong> ao fim de {{numero_tentativas}}  tentativas</p>
+        <p v-else>Insere um número de 1 a 100</p>
+
+    </div>
+
+    <script src="./d_ex12.js"></script>
+    <script>
+        app.mount('#app');
+    </script>
+
+    
+</body>
+</html>

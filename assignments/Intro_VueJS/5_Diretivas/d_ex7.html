@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://unpkg.com/vue@3"></script>
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Pede Nome Ao Utilizador</title>
+</head>
+<body>
+    <div id="app">
+        <h1>Qual o seu nome?</h1>
+        <input type="text" v-model="texto" placeholder="Insere o teu Nome" @keyup.enter="insereNome(texto)"><button @click="insereNome(texto)">Inserir</button>
+        <p v-if="valido"> {{cumprimento}} </p>
+        <p v-else> {{invalido}} </p>
+       
+
+       
+
+    </div>
+
+    <script>
+        Vue.createApp({
+            data() {
+                return{
+                    texto: '',
+                    cumprimento: '',
+                    invalido: '',
+                    valido: false
+                   
+                }
+                    
+            },
+            methods:{
+                insereNome(item){
+                    if (item != '' && item.length >= 2 ){
+                        this.valido = true;
+                        this.cumprimento = 'Olá,' + item + '!';
+                        this.texto = '';
+                    }
+                    else{
+                        this.valido = false;
+                        this.invalido = 'Não me digas que tens um nome tão pequenino xD xP';
+                        this.texto = '';
+                    }
+                
+                }
+            }
+        }).mount('#app')
+    </script>
+    
+</body>
+</html>

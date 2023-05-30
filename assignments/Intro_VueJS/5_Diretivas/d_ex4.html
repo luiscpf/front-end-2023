@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <title>Converte Horas em Minutos e Minutos e Segundos</title>
+
+</head>
+<body>
+    <div id="app">
+        {{ n1 }} Horas são: {{ n1 * n2 }} Minutos e são: {{ n1 * n2 * n2 }} Segundos
+    </div>
+    <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data(){
+                return{
+                    n1: 3,
+                    n2: 60,
+
+                    
+
+                }
+            },
+        }).mount('#app')
+    </script>
+    
+</body>
+</html>

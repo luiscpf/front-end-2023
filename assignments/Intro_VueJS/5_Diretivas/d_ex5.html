@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Converte Horas em Minutos e Minutos e Segundos Input</title>
+</head>
+<body>
+    <div id="app">
+        <h1>Conversor</h1>
+        <input type="number" v-model='Horas' placeholder="Insere Hora" @keyup.enter="insereNumeroH(Horas)" ><strong> Horas </strong><button @click="insereNumeroH(Horas)">Converte</button>
+        <p > {{minutos}}  <strong>Minutos</strong> </p>
+        <input type="number" v-model='Minutos' placeholder="Insere Minutos" @keyup.enter="insereNumeroM(Minutos)" ><strong> Minutos </strong><button @click="insereNumeroM(Minutos)">Converte</button>
+        <p > {{segundos}}  <strong>Segundos</strong> </p>
+
+
+    </div>
+    <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data(){
+                return{
+                    Horas: "",
+                    Minutos: "",
+                    minutos: 0,
+                    segundos: 0,                
+
+                }
+            },
+            methods:{
+                insereNumeroH(numberX){
+                    this.minutos = numberX * 60;
+                    this.segundos = numberX * 60 * 60;
+
+                },
+                insereNumeroM(item){
+                    this.segundos = item * 60;
+
+                },
+
+            }
+        }).mount('#app')
+    </script>
+    
+</body>
+</html>

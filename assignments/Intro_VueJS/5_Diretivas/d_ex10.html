@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.js"></script>
+    <title>Pede número “n” e imprima a soma dos números de 1 até “n”</title>
+</head>
+<body>
+    <div id="app">
+        <h1>Insere um Número:</h1>
+        <input type="number" v-model="numero" placeholder="Insere um Número" @keyup.enter="insertNumber(numero)">
+        <button @click="insertNumber(numero)">Inserir</button>
+        <h2>Impressão da soma dos números de 1 até ao número inserido acima:</h2>
+        <p>{{ soma }}</p>
+
+    </div>
+
+    <script>
+        Vue.createApp({
+            data(){
+                return{
+                    numero: '',
+                    soma: 0,
+
+                }
+            },
+            methods:{
+                insertNumber(item){
+                    this.soma = 0;
+                    for (let i = 0; i <= item; i++) {
+                        this.soma += i;
+                        
+                    }
+                    
+                }
+            },
+        }).mount('#app')
+    </script>
+</body>
+</html>

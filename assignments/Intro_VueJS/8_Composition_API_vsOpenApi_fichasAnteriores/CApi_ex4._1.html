@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://unpkg.com/vue@3"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Count</title>
+</head>
+<body>
+    <div id="app"> 
+        <h1>Converter Celsius para Fahrenheit</h1>
+        <!-- :value: Isso é usado para vincular uma propriedade de dados ao valor de um elemento de entrada. É semelhante ao v-model, mas apenas liga a propriedade de dados ao valor inicial do elemento de entrada e não cria uma ligação bidirecional-->
+        <!-- @change: Este é um ouvinte de evento que dispara quando o valor de um elemento de entrada é alterado e o elemento perde o foco (ou seja, quando o usuário clica fora do elemento de entrada). -->
+        <input type="number" :value="temperatura.celsius" @change="converterParaFahrenheit">
+        <label>Celsius = </label>
+        <input type="number" :value="temperatura.fahrenheit" @change="converterParaCelsius">
+        <label>Fahrenheit</label>
+    </div>
+    
+    <script>
+        Vue.createApp({
+            setup() {
+                const temperatura = Vue.reactive({
+                    celsius: 0,
+                    fahrenheit: 32
+
+                })
+
+                const converterParaFahrenheit = () => {
+                    temperatura.fahrenheit = temperatura.celsius * (9/5) + 32;
+                }
+                const converterParaCelsius = () => {
+                    temperatura.celsius = (temperatura.fahrenheit - 32) * (5/9) ;
+                }               
+
+                return {
+                    temperatura,
+                    converterParaFahrenheit,
+                    converterParaCelsius
+                  
+                }
+            }
+
+        }).mount('#app')
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://unpkg.com/vue@3"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World Reverse</title>
+</head>
+<body>
+    <div id="app"> 
+        <h1>
+            {{ texto }}
+        </h1>
+        <button @click="reverseMessage(str)">Reverse Message</button>
+        
+    </div>
+    
+    <script>
+        Vue.createApp({
+            setup() {
+                const texto = Vue.ref('Hello World!')
+              
+                
+
+                const reverseMessage = (str) => {
+                    const newString = '';
+                    //O ponto inicial do loop será (str.length - 1) que corresponde ao último caracter da string
+                    //Enquanto i for maior ou igual a 0, o loop continua
+                    for (let i = str.length -1; i >=0 ; i--) {
+                        newString += str[i]
+                        
+                    }
+                }            
+
+                return {
+                    texto,
+                    reverseMessage
+                  
+                }
+            }
+
+        }).mount('#app')
+    </script>
+</body>
+</html>

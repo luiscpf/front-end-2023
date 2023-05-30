@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://unpkg.com/vue@3"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"> 
+        <h2>
+            Lista de Tarefas
+            <button @click="edit=!edit">editar</button>
+        </h2>
+        <!-- v-model criar uma conexão bidirecional entre os dados do modelo e os elementos de entrada de formulário-->
+        <input type="text" v-model="texto" @keyup.enter="insereTarefa(texto)">
+        <button @click="insereTarefa(texto)">Inserir</button>
+        <ul v-if="!edit">
+            <!-- :key: Isto é usado para dar um identificador único para cada item em uma lista gerada usando v-for. Isso é útil para o DOM virtual do Vue atualizar o DOM com eficiência quando alterações são feitas na lista. -->
+            <!-- :class: Isso é usado para vincular dinamicamente uma classe CSS a um elemento com base em uma condição. O : é uma abreviação de v-bind, que nos permite vincular dados aos atributos de um elemento. -->
+            <li v-for="(item, index) in tarefas" 
+            :key="index"
+            :class="{realizado:item.realizada, prioritaria:item.prioritario}">
+            {{ item.nome}}
+            </li>
+        </ul>
+        <ul v-else>
+            <li v-for="(item, index) in tarefas"
+                :key="index" 
+                :class="{realizado:item.realizada, prioritaria:item.prioritario}">
+                <input type="text" v-model="item.nome">
+                <input type="checkbox" v-model="item.prioritario">prioritario
+                <input type="checkbox" v-model="item.realizada">realizada
+            </li>
+        </ul>
+        
+    </div>
+    <style>
+        .realizado{
+            text-decoration:line-through;
+            color:grey;
+        }
+        .prioritaria{
+            color:red;}
+    </style>
+    
+    <script>
+        Vue.createApp({
+            setup() {
+                const texto = Vue.ref('')
+                const edit = Vue.ref(false)
+                const tarefas = Vue.ref([
+                    {
+                    nome:'Exercício de HTML',
+                    prioritario:false,
+                    realizada:true
+                    }, 
+                    {
+                    nome:'Exercício de CSS',
+                    prioritario:false,
+                    realizada:false
+                    }, 
+                    {
+                    nome:'Exercício de JavaScript',
+                    prioritario:false,
+                    realizada:false
+                    }, 
+                    {
+                    nome:'Exercício de VueJS',
+                    prioritario:true,
+                    realizada:false
+                    }, 
+                    {
+                    nome:'Juntar tudo no Projeto 1',
+                    prioritario:false,
+                    realizada:false
+                    }
+                ])
+
+                const insereTarefa = (item) => {
+                    tarefas.value.push({
+                        nome: item,
+                        prioritario: false,
+                        realizada: false
+                    })
+                }            
+
+                return {
+                    insereTarefa,
+                    tarefas,
+                    texto,
+                    edit
+                }
+            }
+
+        }).mount('#app')
+    </script>
+</body>
+</html>

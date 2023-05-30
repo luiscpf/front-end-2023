@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Jost:wght@400;700&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/vue@3"></script>
+    <title>Jogo Vue 3</title>
+</head>
+<body>
+
+    <header>
+        <h1>Batalha de Aljubarrota</h1>
+    </header>
+    <div id="game">
+        <section id="enemy" class="container">
+            <h2>Beligerantes</h2> 
+            <div class="healthbar">
+               
+                <div class="healthbar_value" :style="{width: enemyHealth + '%'}"></div>
+            </div>
+        </section>
+        <section id="player" class="container">
+            <h2>Reino de Portugal</h2>
+            <div class="healthbar">
+            
+                <div class="healthbar_value" :style="{width: playerHealth + '%'}"></div>
+            </div>
+        </section>
+         <!-- Ex4 -->
+        <section class="container" v-if="winner">
+           
+            <h2>Game Over</h2>
+            <h3>{{winner}}</h3>
+            <button @click="reset">NOVO JOGO</button>
+
+        </section>
+        <section id="controls" v-else>
+            <button @click="attackEnemy">ATACAR</button>
+            <button :disabled="usedCavalry" @click="cavalryCharge">CAVALARIA</button>
+            <button @click="healPlayer">DEFENDER</button>
+            <button @click="quit">DESISTIR</button>
+        </section>
+        <section id="log" class="container">
+            <h2>Crónica de Combate</h2>
+            <ul>
+                <!-- EX4 -->
+                <li v-for="msg in logMessage" :class="msg.class">
+                    {{msg.name}} {{msg.action}} {{msg.value}} 
+                </li>
+            </ul>
+        </section>
+    </div>
+
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return{
+                    playerHealth: 100,
+                    enemyHealth: 100,
+                    usedCavalry: false,
+                    winner: null,
+                    //Ex4
+                    logMessage: [{
+                        name:'',
+                        action:'',
+                        value: '',
+                        }
+                    ],
+                        
+
+                }
+            },
+            methods: {
+                reset(){
+                    this.playerHealth = 100,
+                    this.enemyHealth = 100,
+                    this.usedCavalry = false,
+                    this.winner = null
+
+                },
+              
+                damage (min, max){
+                    return Math.floor(Math.random() * (max - min)) + min;
+                },
+                
+                checkWinner(){
+                    if(this.enemyHealth <= 0 && this.playerHealth > 0){
+                        this.winner= 'Portugal!!! Portugal!!! Portugal!!!';
+                        this.enemyHealth = 0;
+                    }
+                    else if(this.playerHealth <= 0 && this.enemyHealth > 0){
+                        this.winner= 'errr... acho que não era isto que estava no livro de história :(';
+                        this.playerHealth = 0;
+                    }
+                    else if(this.playerHealth <= 0 && this.enemyHealth <= 0){
+                        this.winner= 'Empatou... acho que não era isto que estava no livro de história';
+                        this.playerHealth = 0;
+                        this.enemyHealth = 0;
+
+                    }
+
+                    
+                },
+                //Ex1
+                attackPlayer(){
+                    //Health
+                    let dano = this.damage (8,15)
+                    this.playerHealth -= dano; 
+                    this.checkWinner();
+                    this.logMessage.unshift({ name:'Beligerantes',action:'atacam com ',value:dano + ' danos', class: "log--enemy"});
+                    
+
+                },
+                attackEnemy(){
+                    //Health
+                    let dano = this.damage(5,12);
+                    this.enemyHealth -= dano;
+                    //unshift em vez do push porque queremos que a última ação esteja no topo da lista
+                    this.logMessage.unshift({name:'Portugueses',action:'atacam com ', value:dano + ' danos', class: "log--damage"});
+                    this.checkWinner();
+                    this.attackPlayer();
+                },
+                //Ex2
+                cavalryCharge(){
+                    let dano = this.damage(10,25);
+                    this.enemyHealth -= dano;
+                    this.logMessage.unshift({name:'Portugueses',action:'atacam com cavalaria ',value:dano + ' danos',class: "log--player"});
+                    this.attackPlayer();
+                    this.usedCavalry = true;
+                },
+                //Ex3
+                healPlayer(){ 
+                    //verifica se vida está no máximo
+                    if(this.playerHealth >=100){
+                        //não faz nada e retorna
+                        return;
+                    }
+                    let heal = this.damage(10,25);
+                    //Verifica se a cura (this.damage) mete a vida acima do máximo
+                    if(this.playerHealth + heal > 100){
+                        this.playerHealth = 100;
+                    }
+                    //Cura regular
+                    else{
+                        this.playerHealth += heal;
+                        this.enemyHealth += this.damage(8,9);
+                    }
+                    this.checkWinner();
+                    this.logMessage.unshift({name:'Portugueses',action:'defendem e recuperam ',value:heal + ' vida',class: "log--player log--heal"});
+                   
+                },
+
+                quit(){
+                    this.winner= 'Nem tentaste...!';
+                    this.playerHealth = 0;
+                    alert('Error Code: Major LOSER!!! XD XP');
+                
+
+                },
+              
+                
+            }
+        });
+        app.mount('#game')
+
+    </script>
+
+    <style>
+    * {
+        box-sizing: border-box;
+    }
+    html {
+        font-family: 'Jost', sans-serif;
+    }
+    body {
+        margin: 0;
+    }
+    header {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+        padding: 0.5rem;
+        background-color: #880017;
+        color: white;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    section {
+        width: 90%;
+        max-width: 40rem;
+        margin: auto;
+    }
+    .healthbar {
+        width: 100%;
+        height: 40px;
+        border: 1px solid #575757;
+        margin: 1rem 0;
+        background: #fde5e5;
+    }
+    .healthbar_value {
+        background-color: #00a876;
+        width: 100%;
+        height: 100%;
+    }
+    .container {
+        text-align: center;
+        padding: 0.5rem;
+        margin: 1rem auto;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+        border-radius: 12px;
+    }
+    #enemy h2,
+    #player h2 {
+        margin: 0.25rem;
+    }
+    #controls {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+    button {
+        font: inherit;
+        border: 1px solid orange;
+        background-color: orange;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        margin: 1rem;
+        width: 12rem;
+        cursor: pointer;
+        box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
+    }
+    button:focus {
+        outline: none;
+    }
+    button:hover,
+    button:active {
+        background-color: orangered;
+        border-color: orangered;
+        box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.26);
+    }
+    button:disabled {
+        background-color: #ccc;
+        border-color: #ccc;
+        box-shadow: none;
+        color: #3f3f3f;
+        cursor: not-allowed;
+    }
+    #log ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    #log li{
+        margin: 0.5rem 0;
+    }
+    .log--player {
+        color: #7700ff;
+    }
+    .log--enemy {
+        color: #da8d00;
+    }
+    .log--damage {
+        color: red;
+    }
+    .log--heal {
+        color: green;
+    }
+    
+    </style>
+    
+
+    
+</body>
+</html>

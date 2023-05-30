@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <input type="number" v-model="n1">
+        <span v-if="n1>n2"> > </span>
+        <span v-else-if="n1<n2"> < </span> 
+        <span v-else> = </span>
+        <input type="number" placeholder="0" v-model="n2" name="" id="">
+
+    </div>
+    <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data(){
+                return{
+                    n1: 0,
+                    n2: 0, 
+
+                }
+            },
+         
+        }).mount('#app')
+    </script>
+    
+    
+</body>
+</html>

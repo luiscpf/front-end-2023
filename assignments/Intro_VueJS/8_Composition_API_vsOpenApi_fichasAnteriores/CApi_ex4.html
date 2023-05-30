@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://unpkg.com/vue@3"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Count</title>
+</head>
+<body>
+    <div id="app"> 
+        <h1>Converter Celsius para Fahrenheit</h1>
+        <!-- v-model: Isso é usado para ligação de dados bidirecional entre um elemento de entrada e um componente Vue. Ele cria uma associação entre o valor do elemento de entrada e uma propriedade de dados no componente Vue e atualiza a propriedade de dados sempre que o valor do elemento de entrada muda. -->
+        <!-- @input: Este é um ouvinte de evento que dispara sempre que o valor de um elemento de entrada muda, independentemente de o elemento ter perdido o foco ou não. É comumente usado com v-model para criar uma ligação bidirecional entre o valor do elemento de entrada e uma propriedade de dados no componente Vue -->
+        <input type="number" v-model="temperatura.celsius" @input="converterParaFahrenheit">
+        <label>Celsius = </label>
+        <input type="number" v-model="temperatura.fahrenheit" @input="converterParaCelsius">
+        <label>Fahrenheit</label>
+    </div>
+    
+    <script>
+        Vue.createApp({
+            setup() {
+                const temperatura = Vue.reactive({
+                    celsius: 0,
+                    fahrenheit: 32
+
+                })
+
+                const converterParaFahrenheit = () => {
+                    temperatura.fahrenheit = temperatura.celsius * (9/5) + 32;
+                }
+                const converterParaCelsius = () => {
+                    temperatura.celsius = (temperatura.fahrenheit - 32) * (5/9) ;
+                }               
+
+                return {
+                    temperatura,
+                    converterParaFahrenheit,
+                    converterParaCelsius
+                  
+                }
+            }
+
+        }).mount('#app')
+    </script>
+</body>
+</html>
